@@ -1,0 +1,118 @@
+I just created a new Rails app with the following options:
+
+--database=sqlite3
+--javascript=esbuild
+--css=tailwind
+--devcontainer
+
+and I would like you to help me create "Context Hub", a Personal MCP Server. A few of the main functions which I envision are
+
+- storing information about myself, my coding & technology preferences for all MCP clients and AI apps to access
+- creating tools that MCP clients can use, such as to run commands on my local machine without giving full shell access
+- acting as a proxy for other MCP servers, so that a developer wouldn't have to repeatedly set up other MCP servers in multiple tools. 
+
+For an example of the usefulness of this least feature, let's say I use the following tools:
+
+- Zed
+- Windsurf
+- BoltAI
+- Claude
+- Aider
+- Cursor
+- VS Code
+
+and let's say I want all of my tools to use the following MCP servers:
+
+- context7
+- TideWave
+- GitHub
+- PostgreSQL
+- Sentry
+- Sequential Thinking
+- File system
+- Obsidian
+- Firecrawl
+- Brave Search
+- BrowserTools Context Server
+
+If I have to set up all of those MCP servers for every tool, that's a LOT OF TIME spent configuring things. If I could just set up all of those MCP servers in my own Personal MCP Server ("Context Hub") and let it act as a proxy, then I can set up only the Personal MCP Server in each tool, and when I add an MCP server I only have to set it up in one place. I believe that is possible.  Am I right?
+
+Context Hub might (if all of these make sene):
+
+- Maintain connections to all other MCP servers
+- Present a unified API to your tools
+- Route requests to the appropriate backend MCP servers
+- Cache responses when appropriate
+- Handle authentication and credentials management
+
+Some of those additional features are great ideas.  
+
+But I would like to use Fast MCP (https://github.com/yjacquin/fast-mcp) to create my Personal MCP Server.
+
+Here are some of my notes from Obsidian:
+
+```
+Rails app that
+- asks you a series of questions to get information relevant to LLMs
+    - preferred formatting decisions
+    - tabs versus spaces, and number of spaces
+    - trailing commas
+    - non-standard ports used (or how to find them)
+    - things to do for every project
+    - things to do for specific projects (based on $PWD, or other criteria)
+    - shell to use
+    - shell configuration file to source
+    - other relevant configuration files
+- serves this information as a [Model Context Protocol server](https://modelcontextprotocol.io/introduction)
+- allows you to add your own questions
+- allows you to share questions with other people by posting them on Twitter, Mastodon, or Bluesky in a given format with an expected hashtag.
+- allows you to create permitted shell commands to run, which can have arguments that an LLM fills in
+- ...
+
+Package this 
+- as a single-file Rails app which uses SQLite, if possible.
+- as an installable package for Homebrew
+- as a script that can be run with curl
+- as an installable jest
+- ...
+```
+
+I would like to build Context Hub (the Personal MCP Server) in phases:
+
+## Phase 1: Foundation & Preferences
+
+- use Rails 8 and Fast MCP (https://github.com/yjacquin/fast-mcp) as the foundation
+- collect answers to basic questions about user coding preferences that would be useful for tools like Claude or Cursor or BoltAI or Windsurf or Zed
+- collect answers to basic questions about the user's development environment (which ports to use, which shell, etc.) that would be useful for tools like Claude or Cursor or BoltAI or Windsurf or Zed
+- allow users to add new questions (which could be shared with other users by exporting question data, maybe as JSONC or JSON5 or TOML or YAML, or maybe something else...) so they can store custom personal information for the tools that use the MCP server
+- allow users to point to existing files they have for giving instructions or rules for specific tools (like CoPilot instructions or Windsurf rules) and making those available generally to everything that uses Context Hub
+
+## Phase 2: Shell Tools
+
+- add a series of default tools that users can configure, including shell commands
+- allow users to create their own shell-based tools (such as to get the current Postgres port or the current value of $PORT for a Rails project, so this information is not limited to the static answers to questions added in phase 1) 
+
+Phase 3: Ruby Tools
+
+- add the ability to create Ruby-based tools (without needing to call Ruby from the shell or first create Ruby scripts to call from the shell)
+
+
+Phase 4: JavaScript & TypeScript Tools
+
+- add the ability to create JavaScript and TypeScript tools by integrating with Node.js using Nodo (https://github.com/mtgrosser/nodo)
+
+Phase 5: AI-Generated Tools
+
+- add an AI Chat UI (based on Radan Skorić's work at https://radanskoric.com/articles/coding-agent-in-ruby) to allow adding new tools without writing code, whether shell or Ruby or JavaScript tools
+
+Phase 6: Roast Integration
+
+- integrate with Roast (https://github.com/Shopify/roast/) to allow the use of more complex structured AI workflows
+(https://code.dblock.org/2025/05/10/executing-structured-ai-workflows-with-shopify-roast.html) if this makes sense
+
+Phase 7: To Infinity & Beyond
+
+- perhaps explore some additional features, like credentials management, monitoring MCP servers, logging, peer-to-peer sharing of tools & questions & rules/instructions, etc.
+
+
+Please begin by (1) gathering any information you need that you can gather through the MCP tools available in Zed, (2) asking me any questions for information you need that only I can give you, (3) pointing out any problems you see, or features that are not feasible, and then (4) implementing Phase 1 of this plan.
