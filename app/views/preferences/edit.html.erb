@@ -1,0 +1,95 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-6">
+    <div class="flex justify-between items-center">
+      <h1 class="text-3xl font-bold text-gray-900">Edit <%= @category.name %> Preferences</h1>
+      <%= link_to "← Back to View", preference_path(@category.name), class: "text-blue-600 hover:text-blue-800" %>
+    </div>
+    <p class="text-lg text-gray-600 mt-2"><%= @category.description %></p>
+  </div>
+
+  <div class="bg-white shadow-md rounded-lg overflow-hidden mb-8">
+    <%= form_with url: preference_path(@category.name), method: :patch, class: "px-6 py-4" do |form| %>
+      <h2 class="text-xl font-semibold mb-6">Update Your Preferences</h2>
+      
+      <% @category.preference_questions.ordered.each do |question| %>
+        <div class="mb-6 pb-6 border-b border-gray-200 last:border-0">
+          <div class="flex justify-between mb-2">
+            <%= form.label "preferences[#{question.key}]", question.label, class: "block font-medium text-gray-700" %>
+            <% if question.required %>
+              <span class="text-xs font-medium text-red-600">Required</span>
+            <% end %>
+          </div>
+          
+          <% if question.description.present? %>
+            <p class="text-gray-500 text-sm mb-2"><%= question.description %></p>
+          <% end %>
+          
+          <% stored_value = @preferences[question.key] %>
+          <% current_value = stored_value.present? ? stored_value : question.default_value %>
+          
+          <div class="mt-1">
+            <% case question.question_type %>
+            <% when 'text' %>
+              <%= form.text_field "preferences[#{question.key}]", value: current_value, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+            
+            <% when 'textarea' %>
+              <%= form.text_area "preferences[#{question.key}]", value: current_value, rows: 4, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+            
+            <% when 'number' %>
+              <%= form.number_field "preferences[#{question.key}]", value: current_value, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+            
+            <% when 'boolean' %>
+              <div class="flex items-center">
+                <%= form.check_box "preferences[#{question.key}]", { checked: current_value.to_s == 'true', class: "h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" }, "1", "0" %>
+                <span class="ml-2 text-gray-700">Yes</span>
+              </div>
+            
+            <% when 'select' %>
+              <%= form.select "preferences[#{question.key}]", 
+                             options_for_select(question.options_array, current_value), 
+                             {}, 
+                             { class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" } %>
+            
+            <% when 'radio' %>
+              <div class="space-y-2">
+                <% question.options_array.each do |option| %>
+                  <div class="flex items-center">
+                    <%= form.radio_button "preferences[#{question.key}]", option, checked: current_value == option, class: "h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500" %>
+                    <span class="ml-2 text-gray-700"><%= option %></span>
+                  </div>
+                <% end %>
+              </div>
+            
+            <% when 'checkbox' %>
+              <% checkbox_values = current_value.is_a?(String) ? JSON.parse(current_value) : current_value %>
+              <div class="space-y-2">
+                <% question.options_array.each do |option| %>
+                  <div class="flex items-center">
+                    <%= check_box_tag "preferences[#{question.key}][]", option, checkbox_values&.include?(option), class: "h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" %>
+                    <span class="ml-2 text-gray-700"><%= option %></span>
+                  </div>
+                <% end %>
+              </div>
+            
+            <% when 'file_path' %>
+              <%= form.text_field "preferences[#{question.key}]", value: current_value, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      
+      <div class="mt-8 flex items-center justify-between">
+        <%= form.submit "Save Preferences", class: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" %>
+        <%= link_to "Cancel", preference_path(@category.name), class: "text-gray-600 hover:text-gray-800" %>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="bg-yellow-50 p-6 rounded-lg">
+    <h2 class="text-xl font-semibold text-yellow-800">Usage Instructions</h2>
+    <p class="mt-2 text-yellow-700">
+      These preferences will be accessible to all MCP clients that connect to Context Hub. 
+      Make sure to set values that accurately reflect your preferred coding style and environment.
+    </p>
+  </div>
+</div>
