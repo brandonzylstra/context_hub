@@ -39,13 +39,13 @@
     </div>
     <div class="mt-4 flex md:ml-4 md:mt-0">
       <%= link_to preferences_path, class: "inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" do %>
-        <svg class="mr-1.5 -ml-0.5 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+        <svg class="mr-1.5 -ml-0.5 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
         </svg>
         Back to Categories
       <% end %>
       <%= link_to edit_preference_path(@category.name), class: "ml-3 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" do %>
-        <svg class="mr-1.5 -ml-0.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <svg class="mr-1.5 -ml-0.5 size-5" viewBox="0 0 20 20" fill="currentColor">
           <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
         </svg>
         Edit Preferences
@@ -80,9 +80,9 @@
               <% when 'boolean' %>
                 <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= display_value.to_s == 'true' ? 'bg-green-50 text-green-700 ring-1 ring-inset ring-green-600/20' : 'bg-red-50 text-red-700 ring-1 ring-inset ring-red-600/20' %>">
                   <% if display_value.to_s == 'true' %>
-                    <svg class="mr-1 h-1.5 w-1.5 fill-green-500" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>
+                    <svg class="mr-1 size-1.5 fill-green-500" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>
                   <% else %>
-                    <svg class="mr-1 h-1.5 w-1.5 fill-red-500" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>
+                    <svg class="mr-1 size-1.5 fill-red-500" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>
                   <% end %>
                   <%= display_value.to_s == 'true' ? 'Yes' : 'No' %>
                 </span>
@@ -115,7 +115,7 @@
     <div class="flex items-start p-6">
       <div class="flex-shrink-0">
         <div class="rounded-md bg-indigo-100 p-2">
-          <svg class="h-6 w-6 text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
+          <svg class="size-6 text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
           </svg>
         </div>
@@ -128,7 +128,7 @@
         <div class="mt-2 flex items-center">
           <code class="block w-full rounded-md bg-gray-900 px-3 py-2 text-sm text-white"><%= request.base_url %>/mcp</code>
           <button type="button" class="ml-2 text-indigo-600 hover:text-indigo-800" title="Copy to clipboard">
-            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor">
               <path d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z" />
               <path d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z" />
             </svg>
