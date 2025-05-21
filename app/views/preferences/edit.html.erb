@@ -67,7 +67,7 @@
     <div id="add-question-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-gray-900 bg-opacity-50 flex items-center justify-center">
       <div class="bg-white rounded-lg shadow-lg w-full max-w-lg mx-auto p-6 relative">
         <h2 class="text-lg font-semibold mb-4 text-gray-900">Add Question to <%= @category.name %></h2>
-        <%= form_with url: add_question_preferences_path(@category.name), method: :post, local: true do |f| %>
+        <%= form_with url: add_question_preference_path(@category.name), method: :post, local: true do |f| %>
           <div class="mb-4">
             <%= f.label :label, "Question Label", class: "block text-sm font-medium text-gray-700" %>
             <%= f.text_field :label, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
