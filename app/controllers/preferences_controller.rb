@@ -31,6 +31,19 @@ class PreferencesController < ApplicationController
   def update
     updated_count = 0
     
+    # Handle reordering if present
+    if params[:question_ordering].present?
+      order_map = params[:question_ordering].split(',')
+      order_map.each_with_index do |question_id, index|
+        question = @category.preference_questions.find_by(id: question_id)
+        if question && question.position != (index + 1)
+          question.update(position: index + 1)
+          updated_count += 1
+        end
+      end
+    end
+    
+    # Handle preference values
     params[:preferences]&.each do |key, value|
       question = @category.preference_questions.find_by(key: key)
       next unless question
@@ -142,6 +155,18 @@ class PreferencesController < ApplicationController
     params.require(:preference_question).permit(:label, :key, :question_type, :description, :default_value, :required, :options)
   end
 
+  def destroy
+    category_name = @category.name
+    
+    if @category.destroy
+      # Also delete any preferences associated with this category
+      UserPreference.where(name: category_name).delete_all
+      redirect_to preferences_path, notice: "Category '<strong>#{category_name}</strong>' was deleted successfully"
+    else
+      redirect_to preferences_path, alert: "Failed to delete category: #{@category.errors.full_messages.to_sentence}"
+    end
+  end
+  
   def load_category
     @category = PreferenceCategory.find_by!(name: params[:id])
   rescue ActiveRecord::RecordNotFound

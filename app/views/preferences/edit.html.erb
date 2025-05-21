@@ -263,14 +263,14 @@
           <div class="px-4 py-6 sm:p-8">
             <h2 class="text-base/7 font-semibold text-gray-900 mb-6">Update Preferences</h2>
 
-            <div class="divide-y divide-gray-200 space-y-1">
+            <div class="divide-y divide-gray-200 space-y-1" id="sortable-questions">
               <% @category.preference_questions.ordered.each do |question| %>
                 <% stored_value = @preferences[question.key] %>
                 <% current_value = stored_value.present? ? stored_value : question.default_value %>
 
-                <div class="py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                <div class="py-5 sm:grid sm:grid-cols-3 sm:gap-4 question-item" data-id="<%= question.id %>">
                   <dt class="text-sm font-medium text-gray-900">
-                      <div class="flex justify-between items-start">
+                      <div class="flex justify-between items-start cursor-move">
                         <div>
                           <%= question.label %>
                           <% if question.description.present? %>
@@ -394,6 +394,7 @@
           <div class="flex items-center justify-end gap-x-6 border-t border-gray-200 px-4 py-4 sm:px-8">
             <%= link_to "Cancel", preference_path(@category.name), class: "text-sm font-semibold text-gray-900 hover:text-gray-700" %>
             <%= form.submit "Save Preferences", class: "rounded-md bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500" %>
+            <%= hidden_field_tag :question_ordering, "", id: "question-ordering" %>
           </div>
         </div>
       </div>
@@ -414,8 +415,43 @@
         <p class="mt-2 text-sm text-gray-700">
           These preferences will be accessible to all MCP clients that connect to Context Hub.
           Make sure to set values that accurately reflect your preferred coding style and environment.
+          <strong>Tip:</strong> You can drag and drop questions to reorder them.
         </p>
       </div>
     </div>
   </div>
+
+  <!-- Sortable JS for drag and drop -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const questionsList = document.getElementById('sortable-questions');
+      const orderingInput = document.getElementById('question-ordering');
+      
+      if (questionsList && orderingInput) {
+        // Add cursor styles to indicate draggable items
+        document.querySelectorAll('.question-item dt').forEach(el => {
+          el.classList.add('cursor-move');
+        });
+        
+        // Initialize Sortable
+        const sortable = new Sortable(questionsList, {
+          animation: 150,
+          handle: '.question-item dt', // Only allow dragging via the dt element (question label)
+          ghostClass: 'bg-gray-100', // Class for the drop placeholder
+          onEnd: function() {
+            // Update hidden input with new order
+            const ids = Array.from(questionsList.querySelectorAll('.question-item'))
+              .map(item => item.getAttribute('data-id'));
+            orderingInput.value = ids.join(',');
+          }
+        });
+        
+        // Set initial ordering
+        const ids = Array.from(questionsList.querySelectorAll('.question-item'))
+          .map(item => item.getAttribute('data-id'));
+        orderingInput.value = ids.join(',');
+      }
+    });
+  </script>
 </div>
