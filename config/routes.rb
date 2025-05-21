@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :preferences, only: [:index, :show, :edit, :update, :new, :create]
+  resources :preferences, only: [:index, :show, :edit, :update, :new, :create] do
+    post 'add_question', on: :member
+  end
   
   # MCP routes are automatically mounted at /mcp
   

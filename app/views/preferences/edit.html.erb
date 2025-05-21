@@ -55,6 +55,81 @@
   </div>
 
   <div class="divide-y divide-gray-900/10">
+    <!-- Add/Edit Question Button and Modal -->
+    <div class="flex justify-end mb-4">
+      <button type="button" id="show-add-question-modal" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        <svg class="mr-1.5 -ml-0.5 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+        </svg>
+        Add Question
+      </button>
+    </div>
+    <div id="add-question-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-gray-900 bg-opacity-50 flex items-center justify-center">
+      <div class="bg-white rounded-lg shadow-lg w-full max-w-lg mx-auto p-6 relative">
+        <h2 class="text-lg font-semibold mb-4 text-gray-900">Add Question to <%= @category.name %></h2>
+        <%= form_with url: add_question_preferences_path(@category.name), method: :post, local: true do |f| %>
+          <div class="mb-4">
+            <%= f.label :label, "Question Label", class: "block text-sm font-medium text-gray-700" %>
+            <%= f.text_field :label, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :key, "Key", class: "block text-sm font-medium text-gray-700" %>
+            <%= f.text_field :key, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :question_type, "Type", class: "block text-sm font-medium text-gray-700" %>
+            <%= f.select :question_type, PreferenceQuestion::QUESTION_TYPES.map { |t| [t.titleize, t] }, {}, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :description, "Description", class: "block text-sm font-medium text-gray-700" %>
+            <%= f.text_area :description, rows: 2, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :default_value, "Default Value", class: "block text-sm font-medium text-gray-700" %>
+            <%= f.text_field :default_value, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :required, "Required?", class: "block text-sm font-medium text-gray-700" %>
+            <%= f.check_box :required, class: "rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" %>
+          </div>
+          <div class="mb-4">
+            <%= f.label :options, "Options (comma separated, for select/radio/checkbox)", class: "block text-sm font-medium text-gray-700" %>
+            <%= f.text_field :options, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+          </div>
+          <div class="flex justify-end gap-2">
+            <button type="button" id="cancel-add-question" class="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300">Cancel</button>
+            <%= f.submit "Add Question", class: "px-4 py-2 rounded-md bg-indigo-600 text-white font-semibold hover:bg-indigo-700" %>
+          </div>
+        <% end %>
+        <button id="close-add-question-modal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
+          <span class="sr-only">Close</span>
+          &times;
+        </button>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        var showBtn = document.getElementById("show-add-question-modal");
+        var modal = document.getElementById("add-question-modal");
+        var closeBtn = document.getElementById("close-add-question-modal");
+        var cancelBtn = document.getElementById("cancel-add-question");
+        if (showBtn && modal) {
+          showBtn.addEventListener("click", function() {
+            modal.classList.remove("hidden");
+          });
+        }
+        if (closeBtn && modal) {
+          closeBtn.addEventListener("click", function() {
+            modal.classList.add("hidden");
+          });
+        }
+        if (cancelBtn && modal) {
+          cancelBtn.addEventListener("click", function() {
+            modal.classList.add("hidden");
+          });
+        }
+      });
+    </script>
     <%= form_with url: preference_path(@category.name), method: :patch do |form| %>
       <div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
         <div class="px-4 sm:px-0">

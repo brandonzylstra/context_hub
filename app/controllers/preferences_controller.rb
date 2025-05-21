@@ -50,6 +50,26 @@ class PreferencesController < ApplicationController
     redirect_to preference_path(@category.name), notice: "Preferences updated successfully"
   end
 
+  def add_question
+    @category = PreferenceCategory.find_by!(name: params[:id])
+    question_params = params.require(:preference_question).permit(:label, :key, :question_type, :description, :default_value, :required, :options)
+    # Convert options from comma-separated string to JSON array if present
+    if question_params[:options].present?
+      question_params[:options] = question_params[:options].split(',').map(&:strip).to_json
+    end
+    # Set position to end
+    max_position = @category.preference_questions.maximum(:position) || 0
+    question = @category.preference_questions.new(question_params.merge(position: max_position + 1))
+    if question.save
+      redirect_to edit_preference_path(@category.name), notice: "Question added successfully"
+    else
+      flash[:alert] = "Failed to add question: #{question.errors.full_messages.to_sentence}"
+      redirect_to edit_preference_path(@category.name)
+    end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to preferences_path, alert: "Category not found"
+  end
+
   private
 
   def category_params
