@@ -73,7 +73,7 @@ class PreferencesController < ApplicationController
 
   def add_question
     @category = PreferenceCategory.find_by!(name: params[:id])
-    question_params = params.permit(:label, :key, :question_type, :description, :default_value, :required, :options)
+    question_params = params.require(:preference_question).permit(:label, :key, :question_type, :description, :default_value, :required, :options)
     
     # Convert options from comma-separated string to JSON array if present
     if question_params[:options].present?

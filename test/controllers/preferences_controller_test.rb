@@ -36,7 +36,7 @@ class PreferencesControllerTest < ActionDispatch::IntegrationTest
     patch preference_url(@category.name), params: { preferences: { @question.key => "baz" } }
     assert_redirected_to preference_url(@category.name)
     follow_redirect!
-    assert_match /Preferences updated successfully/, response.body
+    assert_match /1 preference updated successfully/, response.body
     assert_equal "baz", UserPreference.get(@category.name, @question.key)
   end
 
@@ -47,12 +47,12 @@ class PreferencesControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to preferences_url
     follow_redirect!
-    assert_match /Category created successfully/, response.body
+    assert_match /Category .+?#{unique_name}.+? was created successfully/, response.body
   end
 
   test "should add question to category" do
     unique_key = "bar#{SecureRandom.hex(4)}"
-    assert_difference "@category.preference_questions.count", 1 do
+    assert_difference -> { @category.reload.preference_questions.count } do
       post add_question_preference_url(@category.name), params: {
         preference_question: {
           label: "Bar",
@@ -67,6 +67,6 @@ class PreferencesControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to edit_preference_url(@category.name)
     follow_redirect!
-    assert_match /Question added successfully/, response.body
+    assert_match /Question .+?Bar.+? was added successfully/, response.body
   end
 end

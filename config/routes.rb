@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :preferences, only: [:index, :show, :edit, :update, :new, :create] do
+  resources :preferences, only: [:index, :show, :edit, :update, :new, :create, :destroy] do
     member do
       post 'add_question'
       delete 'delete_question/:question_id', to: 'preferences#delete_question', as: 'delete_question'
@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   end
   
   # MCP routes are automatically mounted at /mcp
+  get 'mcp/dashboard', to: 'mcp#dashboard', as: 'mcp_dashboard'
+  get 'mcp/docs', to: 'mcp#docs', as: 'mcp_docs'
   
   # Root route
   root "preferences#index"
