@@ -24,7 +24,7 @@
 
   <body class="min-h-screen bg-gray-50">
     <!-- Header/Navigation -->
-    <header class="bg-white shadow-sm">
+    <header class="bg-white shadow-sm relative">
       <nav class="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8" aria-label="Global">
         <div class="flex lg:flex-1">
           <a href="/" class="flex items-center gap-x-2">
@@ -35,10 +35,13 @@
           </a>
         </div>
         <div class="flex lg:hidden">
-          <button type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-700">
+          <button type="button" id="mobile-menu-button" aria-expanded="false" class="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900">
             <span class="sr-only">Open main menu</span>
-            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <svg id="menu-closed-icon" class="size-6 block" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            <svg id="menu-open-icon" class="size-6 hidden" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
@@ -54,6 +57,16 @@
           </a>
         </div>
       </nav>
+      
+      <!-- Mobile menu, show/hide based on menu open state. -->
+      <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-lg">
+        <div class="px-4 pt-2 pb-3 space-y-1">
+          <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-indigo-600">Dashboard</a>
+          <a href="/preferences" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-indigo-600">Preferences</a>
+          <a href="/mcp" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-indigo-600">MCP Server</a>
+          <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-indigo-600">Documentation</a>
+        </div>
+      </div>
     </header>
 
     <!-- Flash Messages -->
@@ -84,5 +97,52 @@
         </div>
       </div>
     </footer>
+
+    <!-- Mobile menu toggle script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuClosedIcon = document.getElementById('menu-closed-icon');
+        const menuOpenIcon = document.getElementById('menu-open-icon');
+        
+        if (mobileMenuButton && mobileMenu) {
+          mobileMenuButton.addEventListener('click', function() {
+            const expanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', !expanded);
+            
+            if (expanded) {
+              // Close menu
+              mobileMenu.classList.add('hidden');
+              menuClosedIcon.classList.remove('hidden');
+              menuClosedIcon.classList.add('block');
+              menuOpenIcon.classList.remove('block');
+              menuOpenIcon.classList.add('hidden');
+            } else {
+              // Open menu
+              mobileMenu.classList.remove('hidden');
+              menuClosedIcon.classList.remove('block');
+              menuClosedIcon.classList.add('hidden');
+              menuOpenIcon.classList.remove('hidden');
+              menuOpenIcon.classList.add('block');
+            }
+          });
+          
+          // Close mobile menu when clicking outside
+          document.addEventListener('click', function(event) {
+            if (!mobileMenuButton.contains(event.target) && 
+                !mobileMenu.contains(event.target) && 
+                !mobileMenu.classList.contains('hidden')) {
+              mobileMenu.classList.add('hidden');
+              mobileMenuButton.setAttribute('aria-expanded', 'false');
+              menuClosedIcon.classList.remove('hidden');
+              menuClosedIcon.classList.add('block');
+              menuOpenIcon.classList.remove('block');
+              menuOpenIcon.classList.add('hidden');
+            }
+          });
+        }
+      });
+    </script>
   </body>
 </html>

@@ -16,8 +16,11 @@ class UserPreference < ApplicationRecord
     def set(name, key, value)
       preference = find_or_initialize_by(name: name, key: key)
       preference.value = value.is_a?(String) ? value : value.to_json
-      preference.save
-      value
+      if preference.save
+        true
+      else
+        false
+      end
     end
     
     # Get all preferences for a specific category

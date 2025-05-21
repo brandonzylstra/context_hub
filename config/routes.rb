@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   resources :preferences, only: [:index, :show, :edit, :update, :new, :create] do
-    post 'add_question', on: :member
+    member do
+      post 'add_question'
+      delete 'delete_question/:question_id', to: 'preferences#delete_question', as: 'delete_question'
+      get 'edit_question/:question_id', to: 'preferences#edit_question', as: 'edit_question'
+      patch 'update_question/:question_id', to: 'preferences#update_question', as: 'update_question'
+    end
   end
   
   # MCP routes are automatically mounted at /mcp
