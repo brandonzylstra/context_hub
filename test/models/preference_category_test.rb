@@ -2,7 +2,7 @@ require "test_helper"
 
 class PreferenceCategoryTest < ActiveSupport::TestCase
   def setup
-    @category = PreferenceCategory.create!(name: "Test Category", description: "A test category", active: true)
+    @category = PreferenceCategory.create!(name: "Test Category #{SecureRandom.hex(4)}", description: "A test category", active: true)
   end
 
   test "should be valid with valid attributes" do
@@ -10,7 +10,7 @@ class PreferenceCategoryTest < ActiveSupport::TestCase
   end
 
   test "should require a unique name" do
-    dup = PreferenceCategory.new(name: "Test Category")
+    dup = PreferenceCategory.new(name: @category.name)
     assert_not dup.valid?
     assert_includes dup.errors[:name], "has already been taken"
   end

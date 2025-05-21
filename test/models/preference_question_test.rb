@@ -2,7 +2,7 @@ require "test_helper"
 
 class PreferenceQuestionTest < ActiveSupport::TestCase
   def setup
-    @category = PreferenceCategory.create!(name: "TestCat", description: "desc", active: true)
+    @category = PreferenceCategory.create!(name: "TestCat#{SecureRandom.hex(4)}", description: "desc", active: true)
     @question = @category.preference_questions.create!(
       key: "foo",
       label: "Foo",
@@ -43,7 +43,7 @@ class PreferenceQuestionTest < ActiveSupport::TestCase
     q_num = @category.preference_questions.create!(key: "n", label: "N", question_type: "number", default_value: "42", position: 3)
     assert_equal 42.0, q_num.typed_default_value
 
-    q_checkbox = @category.preference_questions.create!(key: "c", label: "C", question_type: "checkbox", default_value: '["a","b"]', position: 4)
+    q_checkbox = @category.preference_questions.create!(key: "c", label: "C", question_type: "checkbox", default_value: '["a","b"]', position: 4, options: '["a","b","c"]')
     assert_equal ["a", "b"], q_checkbox.typed_default_value
 
     assert_equal "bar", @question.typed_default_value

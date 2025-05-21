@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  key: MyString
-  value: MyText
+  name: FixtureCategory1
+  key: fixture_key_one
+  value: fixture_value_one
 
 two:
-  name: MyString
-  key: MyString
-  value: MyText
+  name: FixtureCategory2
+  key: fixture_key_two
+  value: fixture_value_two

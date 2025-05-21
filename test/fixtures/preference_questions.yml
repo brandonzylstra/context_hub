@@ -2,20 +2,20 @@
 
 one:
   category: one
-  key: MyString
-  label: MyString
-  description: MyText
-  question_type: MyString
-  default_value: MyText
+  key: fixture_key_one
+  label: Fixture Label One
+  description: Fixture description one
+  question_type: text
+  default_value: Default value one
   required: false
   position: 1
 
 two:
   category: two
-  key: MyString
-  label: MyString
-  description: MyText
-  question_type: MyString
-  default_value: MyText
+  key: fixture_key_two
+  label: Fixture Label Two
+  description: Fixture description two
+  question_type: text
+  default_value: Default value two
   required: false
   position: 1

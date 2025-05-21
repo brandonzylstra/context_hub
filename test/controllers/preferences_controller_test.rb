@@ -2,9 +2,10 @@ require "test_helper"
 
 class PreferencesControllerTest < ActionDispatch::IntegrationTest
   def setup
-    @category = PreferenceCategory.create!(name: "TestCat", description: "desc", active: true)
+    @category_name = "TestCat#{SecureRandom.hex(4)}"
+    @category = PreferenceCategory.create!(name: @category_name, description: "desc", active: true)
     @question = @category.preference_questions.create!(
-      key: "foo",
+      key: "foo#{SecureRandom.hex(4)}",
       label: "Foo",
       question_type: "text",
       default_value: "bar",
@@ -22,26 +23,27 @@ class PreferencesControllerTest < ActionDispatch::IntegrationTest
   test "should get show" do
     get preference_url(@category.name)
     assert_response :success
-    assert_select "h1", /#{@category.name}/
+    assert_select "h1", text: /#{@category.name}/
   end
 
   test "should get edit" do
     get edit_preference_url(@category.name)
     assert_response :success
-    assert_select "h1", /Edit #{@category.name}/
+    assert_select "h1", text: /Edit #{@category.name}/
   end
 
   test "should update preferences" do
-    patch preference_url(@category.name), params: { preferences: { foo: "baz" } }
+    patch preference_url(@category.name), params: { preferences: { @question.key => "baz" } }
     assert_redirected_to preference_url(@category.name)
     follow_redirect!
     assert_match /Preferences updated successfully/, response.body
-    assert_equal "baz", UserPreference.get(@category.name, "foo")
+    assert_equal "baz", UserPreference.get(@category.name, @question.key)
   end
 
   test "should create category" do
+    unique_name = "NewCat#{SecureRandom.hex(4)}"
     assert_difference "PreferenceCategory.count", 1 do
-      post preferences_url, params: { preference_category: { name: "NewCat", description: "desc", active: true } }
+      post preferences_url, params: { preference_category: { name: unique_name, description: "desc", active: true } }
     end
     assert_redirected_to preferences_url
     follow_redirect!
@@ -49,11 +51,12 @@ class PreferencesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should add question to category" do
+    unique_key = "bar#{SecureRandom.hex(4)}"
     assert_difference "@category.preference_questions.count", 1 do
       post add_question_preference_url(@category.name), params: {
         preference_question: {
           label: "Bar",
-          key: "bar",
+          key: unique_key,
           question_type: "text",
           description: "desc",
           default_value: "baz",
