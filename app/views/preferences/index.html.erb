@@ -32,7 +32,7 @@
       </p>
     </div>
     <div class="mt-4 sm:mt-0">
-      <button type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+      <button type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
         <svg class="mr-1.5 -ml-0.5 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
         </svg>
@@ -49,14 +49,14 @@
           <div class="flex items-start">
             <!-- Category icon based on name -->
             <div class="flex-shrink-0">
-              <% icon_class = case category.name 
+              <% icon_class = case category.name
                 when "Coding Style" then "text-purple-600"
                 when "Development Environment" then "text-blue-600"
                 when "Shell Configuration" then "text-green-600"
                 when "Project Defaults" then "text-orange-600"
                 else "text-gray-600"
               end %>
-              
+
               <div class="rounded-md bg-gray-50 p-2 <%= icon_class %>">
                 <% case category.name %>
                 <% when "Coding Style" %>
@@ -82,12 +82,12 @@
                 <% end %>
               </div>
             </div>
-            
+
             <!-- Category title and description -->
             <div class="ml-4">
               <h2 class="text-lg font-semibold text-gray-900"><%= category.name %></h2>
               <p class="mt-1 text-sm text-gray-600 line-clamp-2"><%= category.description %></p>
-              
+
               <!-- Question count badge -->
               <div class="mt-2">
                 <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
@@ -107,7 +107,7 @@
               View
             </span>
           <% end %>
-          
+
           <%= link_to edit_preference_path(category.name), class: "rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm ring-1 ring-inset ring-indigo-200 hover:bg-indigo-100" do %>
             <span class="flex items-center">
               <svg class="size-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
