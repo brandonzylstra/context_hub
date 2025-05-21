@@ -5,6 +5,21 @@ class PreferencesController < ApplicationController
     @categories = PreferenceCategory.active.ordered
   end
 
+  def new
+    @category = PreferenceCategory.new
+  end
+
+  def create
+    @category = PreferenceCategory.new(category_params)
+    if @category.save
+      redirect_to preferences_path, notice: "Category created successfully"
+    else
+      @categories = PreferenceCategory.active.ordered
+      flash.now[:alert] = "Failed to create category: #{@category.errors.full_messages.to_sentence}"
+      render :index, status: :unprocessable_entity
+    end
+  end
+
   def show
     @preferences = UserPreference.by_name(@category.name).pluck(:key, :value).to_h
   end
@@ -36,6 +51,10 @@ class PreferencesController < ApplicationController
   end
 
   private
+
+  def category_params
+    params.require(:preference_category).permit(:name, :description, :active)
+  end
 
   def load_category
     @category = PreferenceCategory.find_by!(name: params[:id])

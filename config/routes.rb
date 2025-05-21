@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :preferences, only: [:index, :show, :edit, :update]
+  resources :preferences, only: [:index, :show, :edit, :update, :new, :create]
   
   # MCP routes are automatically mounted at /mcp
   
