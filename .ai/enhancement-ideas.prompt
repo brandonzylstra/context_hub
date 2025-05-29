@@ -1,0 +1,22 @@
+# Make your rules globally available to all your LLMs & tools.
+# Paste rules into a document that is saved in the database
+# Save the rules in files used directly by various editors (to standard locations for those editors)
+# - detect when the file has been updated independently (because it doesn't have the expected SHA256 hash)
+# - update the file (as long as it has not been independently updated)
+# - backup externally updated files before recreating the file from the DB version
+# - if I can find a good DIFF widget, allow merging in the web UI
+
+# Get a set of suggested rules to start with in case you don't have any yet.
+# Generate rules based on your answers to questions in the web UI
+
+
+# compute the mcp.json configuration to connect to ContextHub
+# {
+#   "mcpServers": {
+#     "rails": {
+#       "url": "http://localhost:#{ENV['PORT']}/mcp/sse"
+#     }
+#   }
+# }
+
+

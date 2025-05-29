@@ -1,0 +1,207 @@
+# Rails App LLM Context Tools #
+
+Create a Gem that inserts the following MCP tools & resources into any Rails app:
+
+- list_models
+- list_tables
+- list_active_record_tables
+- describe_data_model
+- display_schema_in_ruby
+- display_structure_in_sql
+- describe_database_configuration
+- query_database
+- generate_report_from_database
+-
+
+- test_app
+- test_models
+- test_controllers
+- test_views
+- test_integration
+- test_performance
+
+
+A Gem to inject MCP tools & resources into any Rails app.
+
+The MCP tools should focus on operations that:
+1. **Require runtime access** to the live Rails application
+2. **Aggregate complex state** that's expensive to compute
+3. **Provide real-time monitoring** data
+4. **Execute operations safely** with built-in guards
+5. **Access encrypted/secured data** through proper Rails channels
+
+Tools like `run_tests`, `performance_metrics`, `slow_queries`, `active_sessions`, `job_stats` provide real value because they access live application state that an AI can't easily replicate by writing code.
+
+**`analyze_data_integrity`** - This would run complex checks like:
+- Foreign key constraint violations that aren't enforced at DB level
+- Referential integrity across soft-deleted records
+- Data consistency rules specific to business logic
+- Detecting corruption patterns
+This would require pre-written, domain-specific validation code that's not trivial to generate on-the-fly.
+
+**`find_orphaned_records`** - This would:
+- Find records with foreign keys pointing to non-existent records
+- Identify soft-deleted parent records with active children
+- Detect circular references
+- Find records that should have been cascade-deleted
+This requires understanding the full association graph and business rules.
+
+**`validate_model_associations`** - This would:
+- Verify all declared associations actually work with sample data
+- Check for missing inverse associations
+- Validate dependent: :destroy chains work correctly
+- Test polymorphic associations resolve properly
+This requires runtime validation that's complex to script ad-hoc.
+
+**`restart_services`** - Beyond restarting Rails server, this might restart Redis, PostgreSQL, Sidekiq, etc. But AI can already run `systemctl restart` or similar commands.
+
+**`asset_pipeline_status`** - This would show if assets are compiled, cache status, etc. But AI can check file timestamps and run asset commands directly.
+
+
+Some of the tools like `performance_metrics` and `slow_queries` provide more value when connecting to a production Rails app, rather than a development server.
+
+Other tools might be prevented from being used on production servers, such as `list_services`, `restart_all_services`, `restart_rails`, and `restart_service`.
+
+
+
+**Simple Analysis:**
+- `code_quality`, `complexity_analysis` - AI can run existing tools like RuboCop
+- `find_duplicates`, `dead_code_detection` - AI can write or run existing tools
+
+**System Operations:**
+- `precompile_assets` - AI can run `rails assets:precompile`
+
+
+# Other Possibilities #
+
+
+## Model & Data Tools
+
+
+8. **validate_model_associations** (tool) - `model_name` (optional)
+9. **check_orphaned_records** (tool) - `model_name` (optional)
+10. **analyze_data_integrity** (tool) - `table_name` (optional)
+
+## Migration Tools
+
+
+
+
+11. **list_migrations** (resource) - `status` (optional), `limit` (optional)
+13. **rollback_migration** (tool) - `steps` (optional), `version` (optional)
+14. **migrate_database** (tool) - `version` (optional)
+15. **migration_status** (resource) - no arguments
+16. **pending_migrations** (resource) - no arguments
+
+**find_orphaned_migrations**
+
+
+
+## Route Management
+
+18. **list_routes** (resource) - `controller` (optional), `method` (optional)
+19. **find_route** (tool) - `path` (required), `method` (optional)
+20. **analyze_unused_routes** (tool) - no arguments
+21. **route_coverage** (resource) - no arguments
+22. **generate_route_docs** (tool) - `format` (optional)
+
+## Controller Tools
+
+
+
+
+
+27. **check_before_actions** (tool) - `controller_name` (optional)
+
+## View & Asset Tools
+
+
+30. **analyze_view_complexity** (tool) - `view_path` (optional)
+
+33. **asset_pipeline_status** (resource) - no arguments
+
+34. **precompile_assets** (tool) - `environment` (optional)
+
+## Testing Tools
+
+35. **run_tests** (tool) - `pattern` (optional), `type` (optional)
+36. **test_coverage** (resource) - `format` (optional)
+
+
+39. **analyze_test_performance** (tool) - `pattern` (optional)
+40. **missing_tests** (resource) - `type` (optional)
+
+## Performance & Monitoring
+
+41. **performance_metrics** (resource) - `timeframe` (optional)
+42. **slow_queries** (resource) - `limit` (optional), `threshold` (optional)
+
+45. **database_size** (resource) - no arguments
+46. **table_sizes** (resource) - no arguments
+47. **index_usage** (resource) - `table` (optional)
+48. **analyze_n_plus_one** (tool) - `controller` (optional)
+
+## Security Tools
+
+49. **security_audit** (tool) - no arguments
+50. **check_vulnerabilities** (tool) - no arguments
+51. **analyze_permissions** (tool) - `model` (optional)
+52. **list_secrets** (resource) - no arguments
+53. **validate_ssl_config** (tool) - no arguments
+54. **check_cors_config** (tool) - no arguments
+
+## Configuration Management
+
+55. **list_environments** (resource) - no arguments
+56. **environment_config** (resource) - `environment` (required)
+57. **list_initializers** (resource) - no arguments
+58. **validate_config** (tool) - `environment` (optional)
+59. **database_config** (resource) - `environment` (optional)
+60. **secrets_config** (resource) - `environment` (optional)
+
+## Gem & Dependency Management
+
+61. **list_gems** (resource) - `group` (optional)
+62. **outdated_gems** (resource) - no arguments
+63. **gem_vulnerabilities** (resource) - no arguments
+64. **bundle_audit** (tool) - no arguments
+
+
+
+## Cache Management
+
+67. **cache_stats** (resource) - no arguments
+68. **clear_cache** (tool) - `type` (optional)
+69. **cache_keys** (resource) - `pattern` (optional)
+70. **cache_hit_rate** (resource) - no arguments
+
+## Background Jobs
+
+71. **list_jobs** (resource) - `status` (optional), `queue` (optional)
+72. **job_stats** (resource) - `timeframe` (optional)
+73. **retry_failed_jobs** (tool) - `job_id` (optional)
+74. **clear_jobs** (tool) - `status` (required)
+75. **schedule_job** (tool) - `job_class` (required), `arguments` (optional)
+
+
+## Code Analysis
+
+86. **code_quality** (tool) - `path` (optional)
+87. **complexity_analysis** (tool) - `path` (optional)
+88. **find_duplicates** (tool) - `path` (optional)
+89. **analyze_dependencies** (tool) - no arguments
+90. **dead_code_detection** (tool) - no arguments
+
+## User & Session Management
+
+91. **active_sessions** (resource) - no arguments
+92. **user_activity** (resource) - `timeframe` (optional)
+93. **session_cleanup** (tool) - `older_than` (optional)
+94. **list_users** (resource) - `role` (optional), `status` (optional)
+
+## Deployment & Environment
+
+95. **deployment_status** (resource) - no arguments
+96. **health_check** (tool) - no arguments
+97. **system_info** (resource) - no arguments
+98. **disk_usage** (resource) - no arguments

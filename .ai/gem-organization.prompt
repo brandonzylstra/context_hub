@@ -1,0 +1,20 @@
+## Organize Gemfile
+
+Take a Gemfile and organize it into logical sections based on the content, giving each section
+a heading with pre-Markdown styling where `#` pads the titles on both sides out to a fixed number of
+characters (such as 100).  For example you might have the categories "Foundational Technology Gems",
+"Application Feature Gems", and "Environment-Specific Gems", and then have the following three
+header lines:
+
+### Foundational Technology Gems ###################################################################
+### Application Feature Gems #######################################################################
+### Environment-Specific Gems ######################################################################
+
+
+The logical sections will depend on which gems are used, so I cannot prescribe an exact breakdown in
+advance and expect it to make sense for all Gemfiles.  However, the example above may work in many
+different cases, especially relatively new Rails applications.  Most of the default gems (including
+those installed based on command-line options used with `rails new`) would fit in the first category
+of "Foundational Technology Gems".  Other gems that the user added to support various features in the
+app would fit under "Application Feature Gems".  And all of the development and testing gems would
+fit under "Environment-Specific Gems".

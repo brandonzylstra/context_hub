@@ -1,0 +1,13 @@
+####### up! #########################
+# The universal installer & updater #
+#####################################
+
+
+Create a universal installer that
+- runs in the terminal
+- uses something like curses or ncurses (or anything more modern!) to display windows in the terminal
+- has adapters for Homebrew, yum, pacman, mas, Bundler, Rubygems, aptget, etc.
+- displays a column of outdated installations in a pane on the left
+- allows you to move up and down through the list with arrow keys (or j & k)
+- displays info regarding any given selection in a larger pane on the right
+- 
