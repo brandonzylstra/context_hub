@@ -14,6 +14,11 @@
 # You can customize the options below to fit your needs.
 require 'fast_mcp'
 
+# Configure rules file path for RulesResource
+Rails.application.configure do
+  config.rules_file_path = File.join(ENV['HOME'], '.config', 'context_hub', 'rules.md')
+end
+
 FastMcp.mount_in_rails(
   Rails.application,
   name: Rails.application.class.module_parent_name.underscore.dasherize,
