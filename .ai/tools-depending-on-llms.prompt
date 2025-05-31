@@ -1,0 +1,12 @@
+Tools That Use LLMs
+
+
+An LLM might need a tool, which itself depends on an LLM.  For example:
+
+- An LLM could scan the code of a repo and detect style choices made in it, to set preferences for
+  - spaces versus tabs
+  - indentation size
+  - whether trailing commas are accepted, rejected, or preferred
+  - etc.
+
+This meta data about the codebase can be cached in Context Hub, and made available to LLMs so that they don't need to gather this information all over again themselves.
