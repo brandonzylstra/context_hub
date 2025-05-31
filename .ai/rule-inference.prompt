@@ -1,0 +1,10 @@
+I want to be able to upload files that already contain information about my preferences, and have Context Hub fill in its data based on those files:
+
+
+- .prettier
+- .eslint
+- .stylelint
+- .editorconfig
+- .gitignore
+- .env*
+- .rubocop.yml

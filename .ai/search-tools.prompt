@@ -1,0 +1,23 @@
+
+Local Context
+=============
+
+Tools to be moved to the Local Context gem later.
+
+
+Dynamic Search Tools
+--------------------
+
+I would like to dynamically generate search tools or resources for every model in a given Rails app.
+
+
+SQL Query Tool
+--------------
+
+I would like give MCP clients a way to run arbitrary SQL queries on a Rails database.
+
+
+Model & Table Tools
+--------------------
+
+I would like to allow MCP clients to get a list of Active Record models in a given Rails app, and a list of tables in the database used by a given Rails app.

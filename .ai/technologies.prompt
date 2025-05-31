@@ -1,0 +1,6 @@
+I want to switch to using the following technologies:
+
+- ActionPolicy for authorization
+- Phlex for all views, instead of ERB
+- Oaken instead of fixtures or factories
+- Bundlebun (https://github.com/yaroslav/bundlebun)

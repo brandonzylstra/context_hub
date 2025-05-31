@@ -1,0 +1,38 @@
+
+
+It is often the case that we want to reuse similar files across many projects.  For example:
+
+- .editorconfig
+- .gitignore
+- .gitattributes
+- .gitmodules
+- .gitconfig
+- .prettierrc
+- Gemfile
+- .github/*
+- .github/workflows/*
+- .github/ISSUE_TEMPLATE/*
+- .github/PULL_REQUEST_TEMPLATE/*
+- .github/CONTRIBUTING.md
+- .project
+- .rubocop.yml
+- .ruby-version
+- Dockerfile
+- Procfile.dev
+- Rakefile
+
+
+I want to be able to store content for any of the files above in Context Hub, marking each as either:
+- a canonical version (to be used as it is in all projects, and if any projects make modifications those should be shared with all other projects)
+- a prototypical version (to be added to projects with some modifications, and if any changes are made those might be relevant to other projects)
+- or an example (to be copied but heavily modified, and no modifications are relevant to other projects)
+- or a template (to have certain data values merged into it with a templating language such as ERB, and then added to projects, where no changes are relevant to other projects)
+
+
+Then when using Context Hub with a new project, an LLM should be able to
+- offer to download the file to the project if it is not yet there
+- download the file to the project if the user says yes
+- record that the user doesn't want it in that project if the user says no
+- detect if the project's file is different from the stored version
+- offer to update one or the other
+- record the user's decision

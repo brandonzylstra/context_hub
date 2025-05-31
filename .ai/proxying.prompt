@@ -1,0 +1,9 @@
+First, I need a way to allow Context Hub to act as a proxy for other MCP servers.  I want to be able to configure dozens of MCP servers on my computer in Context Hub, and then never have to configure them each in my MCP clients.  My MCP clients should ONLY need to have Context Hub added to their configuration, and then all of the tools and resources of all the other MCP servers should become available to them.
+
+If it is possible for Context Hub to provide MCP Server information to clients so that they can dynamically add and remove MCP Servers—rather than actually proxy the MCP servers and create the appearance of Context Hub itself providing all tools and resources—then I would be open to knowing about that, but I think the most likely approach is for Context Hub to be a proxy and to appear to be providing all the tools and resources itself.
+
+Secondly, I need a way for MCP servers to alert Context Hub that they are available, and request it to proxy them.  This would allow, for example, a Ruby gem to be added to a Rails project (let's call this gem "local_context") which could provide information about the local runtime environment and app runtime that an external MCP server could not access and which an LLM might not have direct access to either.
+
+To give an example of how these would both be useful, Context Hub could contain instructions that tell the LLM to never assume PORT 3000 for a Rails app, while local_context could say "this app is using PORT 3045".
+
+There could be many ways to implement this.  For example, Context Hub could have a REST API endpoint that MCP servers can call to register themselves and request proxying.  Context Hub could then maintain a list of registered MCP servers and their corresponding proxy URLs, and provide these tools when the proxied MCP servers are available.
