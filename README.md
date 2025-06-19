@@ -1,12 +1,14 @@
-# README
-
-# Context Hub
+# Context Hub ##
 
 **Context Hub** is a personal MCP (Model Context Protocol) server that provides a central location for user preferences, coding rules, development environment details, and instructions, all accessible by LLM-powered developer tools through the MCP protocol. It also acts as a proxy to route, manage, and cache requests to additional MCP servers, greatly simplifying configuration across tools.
 
+## 🧪 Status:  Highly Experimental & Under Construction 🏗 ##
+
+This repo might swallow all your laundry, neuter your cat, and make you cough up furballs. Use at your own risk.
+
 ---
 
-## ⚡ Project Goals
+## ⚡ Project Goals ##
 
 - **Centralize LLM/Tool Context:** Offer one API endpoint that contains all of your coding preferences, instructions for LLMs (e.g., Claude, Cursor, BoltAI, Windsurf, Zed), and rules you want followed across all your tools.
 - **Proxy Other MCP Servers:** Act as a local hub that can route and aggregate requests to any configured MCP server (e.g., services like context7, GitHub, PostgreSQL, Obsidian, etc.).
