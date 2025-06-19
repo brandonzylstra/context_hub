@@ -1,0 +1,23 @@
+SIMPLE MCP TOOLS
+================
+
+The idea here is to have a framework where an LLM can write
+the code that is used in the MCP tool, and another LLM can
+examine it to determine whether it is safe to run or not.
+
+You could share these with others on the ContextHub.io site,
+and anyone could rate something as safe, unsafe, questionable,
+or uncertain, and give a reason for their rating.  This could
+help you decide which MCP tools to trust, and which to avoid.
+
+
+- Language
+  - Shell
+  - Ruby
+  - JavaScript
+  - Python
+  - Go
+  -
+- Code
+- Arguments (inserted into code before evaluation)
+-

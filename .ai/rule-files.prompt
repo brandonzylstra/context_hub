@@ -1,0 +1,13 @@
+RULES FILES
+===========
+
+
+- AGENT.md: AMP
+- CLAUDE.md
+- .windsurfrules
+- .clinerules
+- .cursorrules
+- .cursor/rules/*
+- .goosehints
+- .github/copilot-instructions.md
+- $HOME/.codeium/windsurf/memories/global_rules.md
